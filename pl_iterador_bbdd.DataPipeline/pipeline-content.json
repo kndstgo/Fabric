@@ -1,0 +1,203 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "isSequential": true,
+          "items": {
+            "value": "@pipeline().parameters.tablas",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "Copy",
+              "typeProperties": {
+                "source": {
+                  "type": "AzurePostgreSqlSource",
+                  "partitionOption": "None",
+                  "queryTimeout": "02:00:00",
+                  "datasetSettings": {
+                    "type": "AzurePostgreSqlTable",
+                    "typeProperties": {
+                      "table": {
+                        "value": "@item()",
+                        "type": "Expression"
+                      },
+                      "schema": "production"
+                    },
+                    "version": "2.0",
+                    "schema": [],
+                    "externalReferences": {
+                      "connection": "75f8a7f9-86fd-4d04-a4b4-315d73e55319"
+                    },
+                    "annotations": []
+                  }
+                },
+                "sink": {
+                  "type": "LakehouseTableSink",
+                  "tableActionOption": "OverwriteSchema",
+                  "applyVOrder": true,
+                  "partitionOption": "None",
+                  "datasetSettings": {
+                    "type": "LakehouseTable",
+                    "typeProperties": {
+                      "table": {
+                        "value": "@concat(\n    'production_',item()\n)",
+                        "type": "Expression"
+                      }
+                    },
+                    "schema": [],
+                    "connectionSettings": {
+                      "name": "Bronze",
+                      "properties": {
+                        "type": "Lakehouse",
+                        "typeProperties": {
+                          "artifactId": "da392e62-49a0-4a27-82b4-7a1ce9c619e6",
+                          "workspaceId": "23fc4e08-257c-44ed-9f11-927b7ec4610d",
+                          "rootFolder": "Tables"
+                        },
+                        "externalReferences": {
+                          "connection": "5b4e6b4c-aaa2-488a-bbeb-28073486feee"
+                        },
+                        "annotations": []
+                      }
+                    },
+                    "annotations": []
+                  }
+                },
+                "translator": {
+                  "type": "TabularTranslator",
+                  "typeConversion": true,
+                  "typeConversionSettings": {
+                    "allowDataTruncation": true,
+                    "treatBooleanAsNumber": false
+                  }
+                },
+                "enableStaging": false
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "data esquema production",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "iterador_bbdd",
+        "state": "Inactive",
+        "onInactiveMarkAs": "Succeeded",
+        "dependsOn": []
+      },
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "isSequential": true,
+          "items": {
+            "value": "@pipeline().parameters.tablas",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "Copy",
+              "typeProperties": {
+                "source": {
+                  "type": "AzurePostgreSqlSource",
+                  "partitionOption": "None",
+                  "queryTimeout": "02:00:00",
+                  "datasetSettings": {
+                    "type": "AzurePostgreSqlTable",
+                    "typeProperties": {
+                      "table": {
+                        "value": "@item()",
+                        "type": "Expression"
+                      },
+                      "schema": "production"
+                    },
+                    "version": "2.0",
+                    "schema": [],
+                    "externalReferences": {
+                      "connection": "75f8a7f9-86fd-4d04-a4b4-315d73e55319"
+                    },
+                    "annotations": []
+                  }
+                },
+                "sink": {
+                  "type": "ParquetSink",
+                  "formatSettings": {
+                    "type": "ParquetWriteSettings",
+                    "enableVertiParquet": true
+                  },
+                  "storeSettings": {
+                    "type": "LakehouseWriteSettings"
+                  },
+                  "datasetSettings": {
+                    "type": "Parquet",
+                    "typeProperties": {
+                      "location": {
+                        "type": "LakehouseLocation",
+                        "folderPath": "Production",
+                        "fileName": {
+                          "value": "@item()",
+                          "type": "Expression"
+                        }
+                      },
+                      "compressionCodec": "snappy"
+                    },
+                    "schema": [],
+                    "connectionSettings": {
+                      "name": "Bronze",
+                      "properties": {
+                        "type": "Lakehouse",
+                        "typeProperties": {
+                          "artifactId": "e9c619e6-7a1c-82b4-4a27-49a0da392e62",
+                          "workspaceId": "00000000-0000-0000-0000-000000000000",
+                          "rootFolder": "Files"
+                        },
+                        "externalReferences": {
+                          "connection": "5b4e6b4c-aaa2-488a-bbeb-28073486feee"
+                        },
+                        "annotations": []
+                      }
+                    },
+                    "annotations": []
+                  }
+                },
+                "translator": {
+                  "type": "TabularTranslator",
+                  "typeConversion": true,
+                  "typeConversionSettings": {
+                    "allowDataTruncation": true,
+                    "treatBooleanAsNumber": false
+                  }
+                },
+                "enableStaging": false
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "data esquema production_ficheros",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "iterador_bbdd_ficheros",
+        "description": "",
+        "dependsOn": []
+      }
+    ],
+    "parameters": {
+      "tablas": {
+        "type": "array"
+      }
+    }
+  }
+}

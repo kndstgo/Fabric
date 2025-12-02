@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "KQLDashboard",
+    "displayName": "hot_meteorologia",
+    "description": "hot_meteorologia"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "30ad0066-1cb2-8e27-48dd-46bb032af4a3"
+  }
+}

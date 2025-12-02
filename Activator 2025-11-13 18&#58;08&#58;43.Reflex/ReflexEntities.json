@@ -1,0 +1,39 @@
+[
+  {
+    "uniqueIdentifier": "a6269b33-63af-4e9a-9889-4bf2e26e48ab",
+    "payload": {
+      "name": "EventStream",
+      "metadata": {
+        "eventstreamArtifactId": "78d9421d-4211-45ba-8a4c-cd3b46d4f062"
+      }
+    },
+    "type": "eventstreamSource-v1"
+  },
+  {
+    "uniqueIdentifier": "2bcd6ee7-0499-4054-b1b9-f4bd43ce5dbd",
+    "payload": {
+      "name": "new_event_stream-stream event",
+      "definition": {
+        "type": "Event",
+        "instance": "{\"templateId\":\"SourceEvent\",\"templateVersion\":\"1.1\",\"steps\":[{\"name\":\"SourceEventStep\",\"id\":\"4b54553b-3544-4b81-abaa-f57052f67d20\",\"rows\":[{\"name\":\"SourceSelector\",\"kind\":\"SourceReference\",\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"a6269b33-63af-4e9a-9889-4bf2e26e48ab\"}]}]}]}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "ec190778-2021-45aa-8a84-e254cc97e75e",
+    "payload": {
+      "name": "Alerta new_event_stream-stream event",
+      "definition": {
+        "type": "Rule",
+        "instance": "{\"steps\":[{\"id\":\"e66d1742-c965-48d4-bd1e-68d144a15879\",\"name\":\"FieldsDefaultsStep\",\"rows\":[{\"arguments\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"2bcd6ee7-0499-4054-b1b9-f4bd43ce5dbd\"}],\"kind\":\"EventReference\",\"name\":\"event\",\"type\":\"complex\"}],\"kind\":\"Event\",\"name\":\"EventSelector\"},{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"temperature.value\"},{\"name\":\"default\",\"type\":\"number\",\"value\":0},{\"name\":\"defaultType\",\"type\":\"string\",\"value\":\"Number\"}],\"kind\":\"EventFieldWithDefault\",\"name\":\"EventFieldWithDefaultSelector\"}]},{\"id\":\"4ec2d7c7-f12d-49ef-85ba-52c05040f05c\",\"name\":\"EventDetectStep\",\"rows\":[{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"temperature.value\"}],\"kind\":\"EventField\",\"name\":\"EventFieldSelector\"},{\"arguments\":[{\"name\":\"op\",\"type\":\"string\",\"value\":\"IsGreaterThan\"},{\"name\":\"threshold\",\"type\":\"number\",\"value\":12}],\"kind\":\"NumberValueCondition\",\"name\":\"NumberValueCondition\"}]},{\"id\":\"2fa21a1f-6d5e-4d0d-b650-bcc2dc421cf4\",\"name\":\"EventDetectStep\",\"rows\":[{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"wind.speed.value\"}],\"kind\":\"EventField\",\"name\":\"EventFieldSelector\"},{\"arguments\":[{\"name\":\"op\",\"type\":\"string\",\"value\":\"IsGreaterThanOrEqualTo\"},{\"name\":\"threshold\",\"type\":\"number\",\"value\":20}],\"kind\":\"NumberValueCondition\",\"name\":\"NumberValueCondition\"}]},{\"id\":\"f298666c-ce8d-4055-b8aa-27be9dd7688f\",\"name\":\"EventDetectStep\",\"rows\":[{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"relativeHumidity\"}],\"kind\":\"EventField\",\"name\":\"EventFieldSelector\"},{\"arguments\":[{\"name\":\"op\",\"type\":\"string\",\"value\":\"IsLessThanOrEqualTo\"},{\"name\":\"threshold\",\"type\":\"number\",\"value\":30}],\"kind\":\"NumberValueCondition\",\"name\":\"NumberValueCondition\"}]},{\"id\":\"0ce27f51-2494-491c-987d-c0b7a5e15003\",\"name\":\"ActStep\",\"rows\":[{\"arguments\":[{\"name\":\"messageLocale\",\"type\":\"string\",\"value\":\"en-us\"},{\"name\":\"recipients\",\"type\":\"array\",\"values\":[{\"name\":\"string\",\"type\":\"string\",\"value\":\"AlvaroAguirreLaporte@Curso181.onmicrosoft.com\"}]},{\"name\":\"headline\",\"type\":\"array\",\"values\":[{\"type\":\"string\",\"value\":\"Alerta de Activator Alerta new_event_stream-stream event\"}]},{\"name\":\"optionalMessage\",\"type\":\"array\",\"values\":[{\"type\":\"string\",\"value\":\"La condición para \\\"Alerta new_event_stream-stream event\\\" se ha cumplido.\"}]},{\"name\":\"additionalInformation\",\"type\":\"array\",\"values\":[]}],\"kind\":\"TeamsMessage\",\"name\":\"TeamsBinding\"}]}],\"templateId\":\"EventTrigger\",\"templateVersion\":\"1.2.3\"}",
+        "settings": {
+          "shouldRun": false,
+          "shouldApplyRuleOnUpdate": true,
+          "delayToleranceMs": 120000
+        }
+      }
+    },
+    "type": "timeSeriesView-v1"
+  }
+]

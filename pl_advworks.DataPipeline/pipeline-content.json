@@ -1,0 +1,243 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "AzurePostgreSqlSource",
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00",
+            "datasetSettings": {
+              "type": "AzurePostgreSqlTable",
+              "typeProperties": {
+                "table": "vjobcandidateeducation",
+                "schema": "humanresources"
+              },
+              "version": "2.0",
+              "schema": [],
+              "externalReferences": {
+                "connection": "75f8a7f9-86fd-4d04-a4b4-315d73e55319"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "ParquetSink",
+            "formatSettings": {
+              "type": "ParquetWriteSettings",
+              "enableVertiParquet": true
+            },
+            "storeSettings": {
+              "type": "LakehouseWriteSettings"
+            },
+            "datasetSettings": {
+              "type": "Parquet",
+              "typeProperties": {
+                "location": {
+                  "type": "LakehouseLocation",
+                  "folderPath": "humanresources",
+                  "fileName": "vjobcandidateeducation"
+                },
+                "compressionCodec": "snappy"
+              },
+              "schema": [],
+              "connectionSettings": {
+                "name": "Bronze",
+                "properties": {
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "artifactId": "e9c619e6-7a1c-82b4-4a27-49a0da392e62",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000",
+                    "rootFolder": "Files"
+                  },
+                  "externalReferences": {
+                    "connection": "5b4e6b4c-aaa2-488a-bbeb-28073486feee"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "mappings": [
+              {
+                "source": {
+                  "name": "jobcandidateid",
+                  "type": "Int32",
+                  "physicalType": "integer"
+                },
+                "sink": {
+                  "name": "jobcandidateid",
+                  "type": "Int32",
+                  "physicalType": "INT_32"
+                }
+              },
+              {
+                "source": {
+                  "name": "Edu.Level",
+                  "type": "String",
+                  "physicalType": "character varying"
+                },
+                "sink": {
+                  "name": "Edu.Level",
+                  "type": "String",
+                  "physicalType": "STRING"
+                }
+              },
+              {
+                "source": {
+                  "name": "Edu.StartDate",
+                  "type": "DateTime",
+                  "physicalType": "date"
+                },
+                "sink": {
+                  "name": "Edu.StartDate",
+                  "type": "DateTime",
+                  "physicalType": "INT96"
+                }
+              },
+              {
+                "source": {
+                  "name": "Edu.EndDate",
+                  "type": "DateTime",
+                  "physicalType": "date"
+                },
+                "sink": {
+                  "name": "Edu.EndDate",
+                  "type": "DateTime",
+                  "physicalType": "INT96"
+                }
+              },
+              {
+                "source": {
+                  "name": "Edu.Degree",
+                  "type": "String",
+                  "physicalType": "character varying"
+                },
+                "sink": {
+                  "name": "Edu.Degree",
+                  "type": "String",
+                  "physicalType": "STRING"
+                }
+              },
+              {
+                "source": {
+                  "name": "Edu.Major",
+                  "type": "String",
+                  "physicalType": "character varying"
+                },
+                "sink": {
+                  "name": "Edu.Major",
+                  "type": "String",
+                  "physicalType": "STRING"
+                }
+              },
+              {
+                "source": {
+                  "name": "Edu.Minor",
+                  "type": "String",
+                  "physicalType": "character varying"
+                },
+                "sink": {
+                  "name": "Edu.Minor",
+                  "type": "String",
+                  "physicalType": "STRING"
+                }
+              },
+              {
+                "source": {
+                  "name": "Edu.GPA",
+                  "type": "String",
+                  "physicalType": "character varying"
+                },
+                "sink": {
+                  "name": "Edu.GPA",
+                  "type": "String",
+                  "physicalType": "STRING"
+                }
+              },
+              {
+                "source": {
+                  "name": "Edu.GPAScale",
+                  "type": "String",
+                  "physicalType": "character varying"
+                },
+                "sink": {
+                  "name": "Edu.GPAScale",
+                  "type": "String",
+                  "physicalType": "STRING"
+                }
+              },
+              {
+                "source": {
+                  "name": "Edu.School",
+                  "type": "String",
+                  "physicalType": "character varying"
+                },
+                "sink": {
+                  "name": "Edu.School",
+                  "type": "String",
+                  "physicalType": "STRING"
+                }
+              },
+              {
+                "source": {
+                  "name": "Edu.Loc.CountryRegion",
+                  "type": "String",
+                  "physicalType": "character varying"
+                },
+                "sink": {
+                  "name": "Edu.Loc.CountryRegion",
+                  "type": "String",
+                  "physicalType": "STRING"
+                }
+              },
+              {
+                "source": {
+                  "name": "Edu.Loc.State",
+                  "type": "String",
+                  "physicalType": "character varying"
+                },
+                "sink": {
+                  "name": "Edu.Loc.State",
+                  "type": "String",
+                  "physicalType": "STRING"
+                }
+              },
+              {
+                "source": {
+                  "name": "Edu.Loc.City",
+                  "type": "String",
+                  "physicalType": "character varying"
+                },
+                "sink": {
+                  "name": "Edu.Loc.City",
+                  "type": "String",
+                  "physicalType": "STRING"
+                }
+              }
+            ],
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Desde Postgres AW",
+        "dependsOn": []
+      }
+    ]
+  }
+}

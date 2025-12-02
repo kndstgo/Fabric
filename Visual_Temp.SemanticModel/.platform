@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Visual_Temp"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "3d1ab4cf-44a3-ac7a-4bb2-00b0d1f02c1e"
+  }
+}

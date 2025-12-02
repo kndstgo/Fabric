@@ -1,0 +1,118 @@
+{
+  "properties": {
+    "jobMode": "Batch",
+    "source": {
+      "type": "RestResource",
+      "connectionSettings": {
+        "type": "RestService",
+        "externalReferences": {
+          "connection": "7d0e518d-b84e-48ac-9ac6-ad3d74ab2ffb"
+        }
+      },
+      "additionalSettings": {
+        "protocolSettings": {
+          "requestMethod": "GET",
+          "requestTimeout": "00:01:40",
+          "requestInterval": "00.00:00:00.010"
+        }
+      }
+    },
+    "destination": {
+      "type": "LakehouseTable",
+      "connectionSettings": {
+        "type": "Lakehouse",
+        "typeProperties": {
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "artifactId": "e9c619e6-7a1c-82b4-4a27-49a0da392e62",
+          "rootFolder": "Tables"
+        },
+        "externalReferences": {
+          "connection": "5b4e6b4c-aaa2-488a-bbeb-28073486feee"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.12:00:00"
+    }
+  },
+  "activities": [
+    {
+      "id": "696b2f02073de",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "relativeUrl": "/posts"
+          },
+          "protocolSettings": {
+            "requestMethod": "GET",
+            "requestTimeout": "00:01:40",
+            "requestInterval": "00.00:00:00.010"
+          }
+        },
+        "destination": {
+          "writeBehavior": "Append",
+          "datasetSettings": {
+            "table": "restResource"
+          }
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator",
+          "mappings": [
+            {
+              "source": {
+                "name": "userId",
+                "type": "Int64"
+              },
+              "destination": {
+                "name": "userId",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "id",
+                "type": "Int64"
+              },
+              "destination": {
+                "name": "id",
+                "physicalType": "long"
+              }
+            },
+            {
+              "source": {
+                "name": "title",
+                "type": "String"
+              },
+              "destination": {
+                "name": "title",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "body",
+                "type": "String"
+              },
+              "destination": {
+                "name": "body",
+                "physicalType": "string"
+              }
+            }
+          ]
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        },
+        "columnFlattenSettings": {
+          "expandArrayIntoMultipleRows": true,
+          "flattenNestedProperties": true,
+          "flattenColumnDelimiter": "."
+        }
+      }
+    }
+  ]
+}

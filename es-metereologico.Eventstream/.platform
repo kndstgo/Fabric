@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Eventstream",
+    "displayName": "es-metereologico"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f4eb298b-0188-a001-4c08-3c86d8c5785b"
+  }
+}

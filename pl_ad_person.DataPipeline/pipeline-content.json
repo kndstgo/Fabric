@@ -1,0 +1,534 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "AzurePostgreSqlSource",
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00",
+            "datasetSettings": {
+              "type": "AzurePostgreSqlTable",
+              "typeProperties": {
+                "table": "contacttype",
+                "schema": "person"
+              },
+              "version": "2.0",
+              "schema": [],
+              "externalReferences": {
+                "connection": "75f8a7f9-86fd-4d04-a4b4-315d73e55319"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "LakehouseTableSink",
+            "tableActionOption": "Append",
+            "applyVOrder": true,
+            "partitionOption": "None",
+            "datasetSettings": {
+              "type": "LakehouseTable",
+              "typeProperties": {
+                "table": "person_contacttype"
+              },
+              "schema": [],
+              "connectionSettings": {
+                "name": "Bronze",
+                "properties": {
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "artifactId": "e9c619e6-7a1c-82b4-4a27-49a0da392e62",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000",
+                    "rootFolder": "Tables"
+                  },
+                  "externalReferences": {
+                    "connection": "5b4e6b4c-aaa2-488a-bbeb-28073486feee"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "mappings": [
+              {
+                "source": {
+                  "name": "contacttypeid",
+                  "type": "Int32",
+                  "physicalType": "integer"
+                },
+                "sink": {
+                  "name": "contacttypeid",
+                  "physicalType": "integer"
+                }
+              },
+              {
+                "source": {
+                  "name": "name",
+                  "type": "String",
+                  "physicalType": "character varying"
+                },
+                "sink": {
+                  "name": "name",
+                  "physicalType": "string"
+                }
+              },
+              {
+                "source": {
+                  "name": "modifieddate",
+                  "type": "DateTime",
+                  "physicalType": "timestamp without time zone"
+                },
+                "sink": {
+                  "name": "modifieddate",
+                  "physicalType": "timestamp"
+                }
+              }
+            ],
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "contacttype",
+        "dependsOn": []
+      },
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "AzurePostgreSqlSource",
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00",
+            "datasetSettings": {
+              "type": "AzurePostgreSqlTable",
+              "typeProperties": {
+                "table": "countryregion",
+                "schema": "person"
+              },
+              "version": "2.0",
+              "schema": [],
+              "externalReferences": {
+                "connection": "75f8a7f9-86fd-4d04-a4b4-315d73e55319"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "LakehouseTableSink",
+            "tableActionOption": "Append",
+            "applyVOrder": true,
+            "partitionOption": "None",
+            "datasetSettings": {
+              "type": "LakehouseTable",
+              "typeProperties": {
+                "table": "person_countryregion"
+              },
+              "schema": [],
+              "connectionSettings": {
+                "name": "Bronze",
+                "properties": {
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "artifactId": "e9c619e6-7a1c-82b4-4a27-49a0da392e62",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000",
+                    "rootFolder": "Tables"
+                  },
+                  "externalReferences": {
+                    "connection": "5b4e6b4c-aaa2-488a-bbeb-28073486feee"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "mappings": [
+              {
+                "source": {
+                  "name": "countryregioncode",
+                  "type": "String",
+                  "physicalType": "character varying"
+                },
+                "sink": {
+                  "name": "countryregioncode",
+                  "physicalType": "string"
+                }
+              },
+              {
+                "source": {
+                  "name": "name",
+                  "type": "String",
+                  "physicalType": "character varying"
+                },
+                "sink": {
+                  "name": "name",
+                  "physicalType": "string"
+                }
+              },
+              {
+                "source": {
+                  "name": "modifieddate",
+                  "type": "DateTime",
+                  "physicalType": "timestamp without time zone"
+                },
+                "sink": {
+                  "name": "modifieddate",
+                  "physicalType": "timestamp"
+                }
+              }
+            ],
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "countryregion",
+        "dependsOn": [
+          {
+            "activity": "contacttype",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "AzurePostgreSqlSource",
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00",
+            "datasetSettings": {
+              "type": "AzurePostgreSqlTable",
+              "typeProperties": {
+                "table": "personphone",
+                "schema": "person"
+              },
+              "version": "2.0",
+              "schema": [],
+              "externalReferences": {
+                "connection": "75f8a7f9-86fd-4d04-a4b4-315d73e55319"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "LakehouseTableSink",
+            "tableActionOption": "Append",
+            "applyVOrder": true,
+            "partitionOption": "None",
+            "datasetSettings": {
+              "type": "LakehouseTable",
+              "typeProperties": {
+                "table": "person_phone"
+              },
+              "schema": [],
+              "connectionSettings": {
+                "name": "Bronze",
+                "properties": {
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "artifactId": "e9c619e6-7a1c-82b4-4a27-49a0da392e62",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000",
+                    "rootFolder": "Tables"
+                  },
+                  "externalReferences": {
+                    "connection": "5b4e6b4c-aaa2-488a-bbeb-28073486feee"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "mappings": [
+              {
+                "source": {
+                  "name": "businessentityid",
+                  "type": "Int32",
+                  "physicalType": "integer"
+                },
+                "sink": {
+                  "name": "businessentityid",
+                  "physicalType": "integer"
+                }
+              },
+              {
+                "source": {
+                  "name": "phonenumber",
+                  "type": "String",
+                  "physicalType": "character varying"
+                },
+                "sink": {
+                  "name": "phonenumber",
+                  "physicalType": "string"
+                }
+              },
+              {
+                "source": {
+                  "name": "phonenumbertypeid",
+                  "type": "Int32",
+                  "physicalType": "integer"
+                },
+                "sink": {
+                  "name": "phonenumbertypeid",
+                  "physicalType": "integer"
+                }
+              },
+              {
+                "source": {
+                  "name": "modifieddate",
+                  "type": "DateTime",
+                  "physicalType": "timestamp without time zone"
+                },
+                "sink": {
+                  "name": "modifieddate",
+                  "physicalType": "timestamp"
+                }
+              }
+            ],
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "personphone",
+        "dependsOn": [
+          {
+            "activity": "countryregion",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "AzurePostgreSqlSource",
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00",
+            "datasetSettings": {
+              "type": "AzurePostgreSqlTable",
+              "typeProperties": {
+                "table": "phonenumbertype",
+                "schema": "person"
+              },
+              "version": "2.0",
+              "schema": [],
+              "externalReferences": {
+                "connection": "75f8a7f9-86fd-4d04-a4b4-315d73e55319"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "LakehouseTableSink",
+            "tableActionOption": "OverwriteSchema",
+            "applyVOrder": true,
+            "partitionOption": "None",
+            "datasetSettings": {
+              "type": "LakehouseTable",
+              "typeProperties": {
+                "table": "person_phonenumber"
+              },
+              "schema": [],
+              "connectionSettings": {
+                "name": "Bronze",
+                "properties": {
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "artifactId": "e9c619e6-7a1c-82b4-4a27-49a0da392e62",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000",
+                    "rootFolder": "Tables"
+                  },
+                  "externalReferences": {
+                    "connection": "5b4e6b4c-aaa2-488a-bbeb-28073486feee"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "mappings": [
+              {
+                "source": {
+                  "name": "phonenumbertypeid",
+                  "type": "Int32",
+                  "physicalType": "integer"
+                },
+                "sink": {
+                  "name": "phonenumbertypeid",
+                  "physicalType": "integer"
+                }
+              },
+              {
+                "source": {
+                  "name": "name",
+                  "type": "String",
+                  "physicalType": "character varying"
+                },
+                "sink": {
+                  "name": "name",
+                  "physicalType": "string"
+                }
+              },
+              {
+                "source": {
+                  "name": "modifieddate",
+                  "type": "DateTime",
+                  "physicalType": "timestamp without time zone"
+                },
+                "sink": {
+                  "name": "modifieddate",
+                  "physicalType": "timestamp"
+                }
+              }
+            ],
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "phonenumber",
+        "dependsOn": [
+          {
+            "activity": "personphone",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Fail",
+        "typeProperties": {
+          "message": {
+            "value": "@concat(\n'error person contacttype',\nactivity('contacttype').output\n)",
+            "type": "Expression"
+          },
+          "errorCode": "10"
+        },
+        "name": "Error_contacttype",
+        "dependsOn": [
+          {
+            "activity": "contacttype",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Fail",
+        "typeProperties": {
+          "message": {
+            "value": "@concat(\n'error person countryregion',\nactivity('countryregion').output\n)",
+            "type": "Expression"
+          },
+          "errorCode": "11"
+        },
+        "name": "Error_countryregion",
+        "dependsOn": [
+          {
+            "activity": "countryregion",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Fail",
+        "typeProperties": {
+          "message": {
+            "value": "@concat(\n'error person personphone',\nactivity('personphone').output\n)",
+            "type": "Expression"
+          },
+          "errorCode": "12"
+        },
+        "name": "Error_personphone",
+        "dependsOn": [
+          {
+            "activity": "personphone",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Fail",
+        "typeProperties": {
+          "message": {
+            "value": "@concat(\n'error person phonenumber',\nactivity('phonenumber').output\n)",
+            "type": "Expression"
+          },
+          "errorCode": "13"
+        },
+        "name": "Error_phonenumber",
+        "dependsOn": [
+          {
+            "activity": "phonenumber",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

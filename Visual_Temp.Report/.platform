@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Visual_Temp"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "65e74307-cc67-9412-4838-8af642a0170c"
+  }
+}

@@ -1,0 +1,5 @@
+relationship ec258544-5c0d-bb70-9d84-147a2fd15319
+	relyOnReferentialIntegrity
+	fromColumn: ft_sales_dia_orden.salesreasonid
+	toColumn: dim_sales_reason.salesreasonid
+

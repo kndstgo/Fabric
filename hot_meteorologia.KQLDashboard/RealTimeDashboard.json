@@ -1,0 +1,74 @@
+{
+  "schema_version": 66,
+  "tiles": [
+    {
+      "id": "64f42f5c-62e9-4aa6-b56d-233b182ff7cc",
+      "title": "icono_meteorolic",
+      "visualType": "table",
+      "pageId": "e5930ba6-269a-4b14-8d56-ab59589d5a24",
+      "layout": {
+        "width": 9,
+        "height": 7,
+        "x": 0,
+        "y": 0
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "e421e47e-1336-4916-a9d9-e3d90a5cd460"
+      },
+      "visualOptions": {
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        }
+      }
+    }
+  ],
+  "baseQueries": [],
+  "parameters": [
+    {
+      "kind": "duration",
+      "id": "8ed88f2d-ecbd-4002-8354-f9af7289652d",
+      "displayName": "Intervalo de tiempo",
+      "description": "",
+      "beginVariableName": "_startTime",
+      "endVariableName": "_endTime",
+      "defaultValue": {
+        "kind": "dynamic",
+        "count": 1,
+        "unit": "hours"
+      },
+      "showOnPages": {
+        "kind": "all"
+      }
+    }
+  ],
+  "dataSources": [
+    {
+      "id": "fa0393ac-8e40-4006-9a2a-516166701135",
+      "kind": "kusto-trident",
+      "scopeId": "kusto-trident",
+      "clusterUri": "",
+      "database": "f9c26793-6324-bde2-4e76-e702cf20ede6",
+      "name": "eh_analitica_streaming",
+      "workspace": "00000000-0000-0000-0000-000000000000"
+    }
+  ],
+  "pages": [
+    {
+      "name": "Página 1",
+      "id": "e5930ba6-269a-4b14-8d56-ab59589d5a24"
+    }
+  ],
+  "queries": [
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "fa0393ac-8e40-4006-9a2a-516166701135"
+      },
+      "text": "hot_meteorologicos\n| extend dt = todatetime(dateTime)\n| extend tempArray = parse_json(temperature)\n| mv-expand tempArray\n| extend valor = todouble(tempArray.value)\n| extend loc = parse_json(location)\n| extend latitud = todouble(loc.latitude),\n     longitud = todouble(loc.longitude)\n| extend fecha = format_datetime(dt, \"yyyy-MM-dd\"),\n     hora = format_datetime(dt, \"HH:mm:ss\")\n| summarize\n  TempMax = max(valor),\n  TempMin = min(valor),\n  latitud = any(latitud),\n  longitud = any(longitud)\n by fecha, hora\n| order by fecha desc, hora desc\n",
+      "id": "e421e47e-1336-4916-a9d9-e3d90a5cd460",
+      "usedVariables": []
+    }
+  ]
+}

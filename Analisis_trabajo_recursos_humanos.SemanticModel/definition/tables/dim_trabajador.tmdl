@@ -1,0 +1,42 @@
+table dim_trabajador
+	lineageTag: fcb26f3b-bd35-4e3b-ae80-57a0421a494a
+	sourceLineageTag: [dbo].[dim_trabajador]
+
+	column businessentityid
+		dataType: int64
+		formatString: 0
+		lineageTag: a5614b99-0ebe-46df-89e6-f72bc6dea84d
+		sourceLineageTag: businessentityid
+		summarizeBy: none
+		sourceColumn: businessentityid
+
+		changedProperty = SummarizeBy
+
+		annotation SummarizationSetBy = User
+
+	column fechainicio
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b7ee401b-a6b9-4698-956f-1d2d20d687df
+		sourceLineageTag: fechainicio
+		summarizeBy: none
+		sourceColumn: fechainicio
+
+		annotation SummarizationSetBy = Automatic
+
+	column fechatermino
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 73f13ab2-1028-45e5-be82-d6f163614a46
+		sourceLineageTag: fechatermino
+		summarizeBy: none
+		sourceColumn: fechatermino
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_trabajador = entity
+		mode: directLake
+		source
+			entityName: dim_trabajador
+			expressionSource: 'DirectLake - Silver'
+

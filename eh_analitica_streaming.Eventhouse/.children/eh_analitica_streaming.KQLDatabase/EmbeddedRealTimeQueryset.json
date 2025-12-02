@@ -1,0 +1,28 @@
+{
+  "queryset": {
+    "version": "1.0.0",
+    "dataSources": [
+      {
+        "id": "4c6c682d-299e-49c0-b5a8-dab0d8a1fbb4",
+        "clusterUri": "https://trd-7y5uvdgkg9mm29bcd6.z5.kusto.fabric.microsoft.com",
+        "type": "Fabric",
+        "databaseItemId": "cf20ede6-e702-4e76-bde2-6324f9c26793",
+        "databaseItemName": "eh_analitica_streaming"
+      }
+    ],
+    "tabs": [
+      {
+        "id": "08aa2073-1bcc-44e2-a248-eb5d1b1b3e19",
+        "content": "//***********************************************************************************************************\n// Here are two articles to help you get started with KQL:\n// KQL reference guide - https://aka.ms/KQLguide\n// SQL - KQL conversions - https://aka.ms/sqlcheatsheet\n//***********************************************************************************************************\n\n// Use \"take\" to view a sample number of records in the table and check the data.\nYOUR_TABLE_HERE\n| take 100\n\n// See how many records are in the table.\nYOUR_TABLE_HERE\n| count\n\n// This query returns the number of ingestions per hour in the given table.\nYOUR_TABLE_HERE\n| summarize IngestionCount = count() by bin(ingestion_time(), 1h)\n\n",
+        "title": "Tab",
+        "dataSourceId": "4c6c682d-299e-49c0-b5a8-dab0d8a1fbb4"
+      },
+      {
+        "id": "cd3329c2-6670-401f-8804-a941b907fb38",
+        "content": "hot_meteorologicos\n| extend dt = todatetime(dateTime)\n| extend tempArray = parse_json(temperature)\n| mv-expand tempArray\n| extend valor = todouble(tempArray.value)\n| extend loc = parse_json(location)\n| extend latitud = todouble(loc.latitude),\n     longitud = todouble(loc.longitude)\n| extend fecha = format_datetime(dt, \"yyyy-MM-dd\"),\n     hora = format_datetime(dt, \"HH:mm:ss\")\n| summarize\n  TempMax = max(valor),\n  TempMin = min(valor),\n  latitud = any(latitud),\n  longitud = any(longitud)\n by fecha, hora\n| order by fecha desc, hora desc\n",
+        "title": "",
+        "dataSourceId": "4c6c682d-299e-49c0-b5a8-dab0d8a1fbb4"
+      }
+    ]
+  }
+}

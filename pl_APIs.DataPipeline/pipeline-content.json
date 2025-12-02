@@ -1,0 +1,288 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "RestSource",
+            "requestMethod": "GET",
+            "paginationRules": {
+              "supportRFC5988": "true"
+            },
+            "httpRequestTimeout": "00:01:40",
+            "requestInterval": "00.00:00:00.010",
+            "datasetSettings": {
+              "type": "RestResource",
+              "typeProperties": {
+                "relativeUrl": "/posts"
+              },
+              "schema": [],
+              "externalReferences": {
+                "connection": "d429ab2c-ecf8-4098-900a-05057f722e18"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "LakehouseTableSink",
+            "tableActionOption": "Append",
+            "applyVOrder": true,
+            "partitionOption": "None",
+            "datasetSettings": {
+              "type": "LakehouseTable",
+              "typeProperties": {
+                "table": "Prueba_API"
+              },
+              "schema": [],
+              "connectionSettings": {
+                "name": "Bronze",
+                "properties": {
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "artifactId": "da392e62-49a0-4a27-82b4-7a1ce9c619e6",
+                    "workspaceId": "23fc4e08-257c-44ed-9f11-927b7ec4610d",
+                    "rootFolder": "Tables"
+                  },
+                  "externalReferences": {
+                    "connection": "5b4e6b4c-aaa2-488a-bbeb-28073486feee"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "mappings": [
+              {
+                "source": {
+                  "name": "userId",
+                  "type": "Int64"
+                },
+                "sink": {
+                  "name": "userId",
+                  "physicalType": "long"
+                }
+              },
+              {
+                "source": {
+                  "name": "id",
+                  "type": "Int64"
+                },
+                "sink": {
+                  "name": "id",
+                  "physicalType": "long"
+                }
+              },
+              {
+                "source": {
+                  "name": "title",
+                  "type": "String"
+                },
+                "sink": {
+                  "name": "title",
+                  "physicalType": "string"
+                }
+              },
+              {
+                "source": {
+                  "name": "body",
+                  "type": "String"
+                },
+                "sink": {
+                  "name": "body",
+                  "physicalType": "string"
+                }
+              }
+            ],
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            },
+            "columnFlattenSettings": {
+              "treatArrayAsString": false,
+              "treatStructAsString": false,
+              "flattenColumnDelimiter": "."
+            }
+          },
+          "enableStaging": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Copy data1",
+        "state": "Inactive",
+        "onInactiveMarkAs": "Succeeded",
+        "dependsOn": []
+      },
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "JsonSource",
+            "formatSettings": {
+              "type": "JsonReadSettings"
+            },
+            "storeSettings": {
+              "type": "HttpReadSettings",
+              "requestMethod": "GET"
+            },
+            "datasetSettings": {
+              "type": "Json",
+              "typeProperties": {
+                "location": {
+                  "type": "HttpServerLocation",
+                  "relativeUrl": {
+                    "value": "@concat(\n    'v1/forecast?latitude=40.71&longitude=-74.01&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=America/New_York&start_date=',\n    variables('UltimaFechaEjecucion')\n)",
+                    "type": "Expression"
+                  }
+                }
+              },
+              "schema": {},
+              "externalReferences": {
+                "connection": "dc550dac-ddff-4e87-8919-ff0aa87e8822"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "LakehouseTableSink",
+            "tableActionOption": "OverwriteSchema",
+            "applyVOrder": true,
+            "partitionOption": "None",
+            "datasetSettings": {
+              "type": "LakehouseTable",
+              "typeProperties": {
+                "table": "Prueba_API_Meteo"
+              },
+              "schema": [],
+              "connectionSettings": {
+                "name": "Bronze",
+                "properties": {
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "artifactId": "e9c619e6-7a1c-82b4-4a27-49a0da392e62",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000",
+                    "rootFolder": "Tables"
+                  },
+                  "externalReferences": {
+                    "connection": "5b4e6b4c-aaa2-488a-bbeb-28073486feee"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            },
+            "columnFlattenSettings": {
+              "treatArrayAsString": false,
+              "treatStructAsString": false,
+              "flattenColumnDelimiter": "."
+            }
+          },
+          "enableStaging": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Copia_Datos_Meteo",
+        "dependsOn": [
+          {
+            "activity": "Guardar_Fecha_Maxima",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Lookup",
+        "typeProperties": {
+          "source": {
+            "type": "LakehouseTableSource",
+            "sqlReaderQuery": "SELECT MAX([daily.time]) AS MaxDate FROM Prueba_API_Meteo",
+            "partitionOption": "None"
+          },
+          "datasetSettings": {
+            "type": "LakehouseTable",
+            "typeProperties": {
+              "table": "Prueba_API_Meteo"
+            },
+            "schema": [],
+            "connectionSettings": {
+              "name": "Bronze",
+              "properties": {
+                "type": "Lakehouse",
+                "typeProperties": {
+                  "artifactId": "e9c619e6-7a1c-82b4-4a27-49a0da392e62",
+                  "workspaceId": "00000000-0000-0000-0000-000000000000",
+                  "rootFolder": "Tables"
+                },
+                "externalReferences": {
+                  "connection": "5b4e6b4c-aaa2-488a-bbeb-28073486feee"
+                },
+                "annotations": []
+              }
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Buscar_Fecha_Maxima",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "UltimaFechaEjecucion",
+          "value": {
+            "value": "@formatDateTime(addDays(activity('Buscar_Fecha_Maxima').output.firstRow.MaxDate, 1), 'yyyy-MM-dd')",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Guardar_Fecha_Maxima",
+        "dependsOn": [
+          {
+            "activity": "Buscar_Fecha_Maxima",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "variables": {
+      "UltimaFechaEjecucion": {
+        "type": "String"
+      }
+    }
+  }
+}

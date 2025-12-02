@@ -1,0 +1,11 @@
+expression 'DirectLake - Silver' =
+		let
+		    Source = AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/23fc4e08-257c-44ed-9f11-927b7ec4610d/cbc59747-ba88-43d7-9481-367e2c8c2252", [HierarchicalNavigation=true])
+		in
+		    Source
+	lineageTag: 3063d03f-852f-45f7-86ca-e39180524311
+
+	annotation PBI_IncludeFutureArtifacts = False
+
+	annotation PBI_RemovedChildren = [{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[dbo].[dim_cliente_tcredito]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[dbo].[dim_tarjetas_credito]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[dbo].[dim_monedas]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[dbo].[ft_sales_dia_orden]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[dbo].[ft_tipo_cambio_dia]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[dbo].[dim_sales_reason]"}},"objectType":"Table"}]
+
