@@ -39,3 +39,26 @@
 # META   "language": "sparksql",
 # META   "language_group": "synapse_pyspark"
 # META }
+
+# CELL ********************
+
+df = spark.sql("SELECT max(time) as maximo FROM Silver.minciencia_incremental_pl")
+display(df)
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+df.write.mode("overwrite").option("mergeSchema", "true").saveAsTable("Bronze.marca_de_agua")
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
